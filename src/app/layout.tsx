@@ -17,8 +17,36 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Veshro Cafe",
+  metadataBase: new URL('https://veshro-cafe.vercel.app'), // Placeholder production URL
+  title: {
+    default: "Veshro Cafe",
+    template: "%s | Veshro Cafe"
+  },
   description: "Experience the best food in town. Order now via WhatsApp.",
+  keywords: ["Food", "Delivery", "Cafe", "WhatsApp Ordering", "Veshro Cafe"],
+  authors: [{ name: "Veshro Cafe" }],
+  openGraph: {
+    title: "Veshro Cafe",
+    description: "Experience the best food in town. Order now via WhatsApp.",
+    url: 'https://veshro-cafe.vercel.app',
+    siteName: 'Veshro Cafe',
+    images: [
+      {
+        url: '/og_image.png',
+        width: 1200,
+        height: 630,
+        alt: 'Veshro Cafe',
+      },
+    ],
+    locale: 'en_US',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: "Veshro Cafe",
+    description: "Experience the best food in town. Order now via WhatsApp.",
+    images: ['/og_image.png'],
+  },
   appleWebApp: {
     capable: true,
     statusBarStyle: "default",
@@ -48,10 +76,10 @@ export default function RootLayout({
         className={cn(
           geistSans.variable,
           geistMono.variable,
-          "antialiased min-h-screen bg-zinc-100 dark:bg-zinc-900 flex justify-center"
+          "antialiased min-h-screen bg-zinc-100 dark:bg-zinc-900"
         )}
       >
-        <div className="w-full max-w-md min-h-screen bg-background shadow-2xl overflow-x-hidden flex flex-col relative">
+        <div className="w-full min-h-screen bg-background shadow-2xl overflow-x-hidden flex flex-col relative">
           <CartProvider>
             <SplashScreen />
             <Navbar />

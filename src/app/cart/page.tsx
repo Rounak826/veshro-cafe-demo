@@ -103,137 +103,160 @@ export default function CartPage() {
             </header>
 
             {/* Content */}
-            <div className="p-4 space-y-6">
+            <div className="p-4 grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-12 max-w-7xl mx-auto w-full">
 
-                {/* Items List */}
-                <div className="space-y-4">
-                    <AnimatePresence>
-                        {items.map((item) => (
-                            <MenuItemCard key={item.id} item={item} />
-                        ))}
-                    </AnimatePresence>
-                </div>
-
-                {/* Delivery Options */}
-                <div className="rounded-3xl bg-secondary/50 p-2 flex gap-2">
-                    <button
-                        onClick={() => setOrderType('takeaway')}
-                        className={cn(
-                            "flex-1 rounded-2xl py-3 text-sm font-bold transition-all duration-300",
-                            orderType === 'takeaway'
-                                ? "bg-background text-foreground shadow-sm ring-1 ring-border"
-                                : "text-muted-foreground hover:bg-background/50"
-                        )}
-                    >
-                        Takeaway
-                    </button>
-                    <button
-                        onClick={() => setOrderType('delivery')}
-                        className={cn(
-                            "flex-1 rounded-2xl py-3 text-sm font-bold transition-all duration-300",
-                            orderType === 'delivery'
-                                ? "bg-background text-foreground shadow-sm ring-1 ring-border"
-                                : "text-muted-foreground hover:bg-background/50"
-                        )}
-                    >
-                        Delivery
-                    </button>
-                </div>
-
-                {/* Details Form */}
-                <div className="space-y-4">
-                    <h3 className="text-lg font-bold px-1">Order Details</h3>
-
-                    <div className="grid gap-4">
-                        <div className="relative group">
-                            <input
-                                type="text"
-                                value={name}
-                                onChange={(e) => setName(e.target.value)}
-                                placeholder=" "
-                                className="peer w-full rounded-2xl border-none bg-secondary px-5 py-4 text-base font-medium placeholder-transparent focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all"
-                            />
-                            <label className="absolute left-5 top-4 text-muted-foreground text-sm transition-all peer-placeholder-shown:translate-y-0 peer-placeholder-shown:text-base peer-focus:-translate-y-3 peer-focus:text-xs peer-focus:text-primary peer-[:not(:placeholder-shown)]:-translate-y-3 peer-[:not(:placeholder-shown)]:text-xs">
-                                Your Name
-                            </label>
-                        </div>
-
-                        <div className="relative group">
-                            <input
-                                type="tel"
-                                value={phone}
-                                onChange={(e) => setPhone(e.target.value)}
-                                placeholder=" "
-                                className="peer w-full rounded-2xl border-none bg-secondary px-5 py-4 text-base font-medium placeholder-transparent focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all"
-                            />
-                            <label className="absolute left-5 top-4 text-muted-foreground text-sm transition-all peer-placeholder-shown:translate-y-0 peer-placeholder-shown:text-base peer-focus:-translate-y-3 peer-focus:text-xs peer-focus:text-primary peer-[:not(:placeholder-shown)]:-translate-y-3 peer-[:not(:placeholder-shown)]:text-xs">
-                                Phone Number
-                            </label>
-                        </div>
+                {/* Left Column: Items */}
+                <div className="lg:col-span-8 space-y-6">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-4">
+                        <AnimatePresence>
+                            {items.map((item) => (
+                                <MenuItemCard key={item.id} item={item} />
+                            ))}
+                        </AnimatePresence>
                     </div>
+                </div>
 
-                    <AnimatePresence>
-                        {orderType === 'delivery' && (
-                            <motion.div
-                                initial={{ height: 0, opacity: 0 }}
-                                animate={{ height: 'auto', opacity: 1 }}
-                                exit={{ height: 0, opacity: 0 }}
-                                className="overflow-hidden space-y-4 pt-2"
+                {/* Right Column: Form & Checkout */}
+                <div className="lg:col-span-4 relative">
+                    <div className="space-y-6 lg:sticky lg:top-24">
+
+                        {/* Delivery Options */}
+                        <div className="rounded-3xl bg-secondary/50 p-2 flex gap-2 w-full max-w-md mx-auto lg:max-w-none">
+                            <button
+                                onClick={() => setOrderType('takeaway')}
+                                className={cn(
+                                    "flex-1 rounded-2xl py-3 text-sm font-bold transition-all duration-300",
+                                    orderType === 'takeaway'
+                                        ? "bg-background text-foreground shadow-sm ring-1 ring-border"
+                                        : "text-muted-foreground hover:bg-background/50"
+                                )}
                             >
-                                <div className="flex flex-col gap-3">
-                                    <button
-                                        onClick={handleGetLocation}
-                                        disabled={isLoadingLocation}
-                                        className={cn(
-                                            "flex items-center justify-center gap-2 w-full rounded-2xl py-4 font-bold transition-all active:scale-[0.98]",
-                                            location
-                                                ? "bg-green-600 text-white shadow-md shadow-green-600/20"
-                                                : "bg-primary/10 text-primary hover:bg-primary/20"
-                                        )}
-                                    >
-                                        {isLoadingLocation ? (
-                                            <span className="animate-pulse">Locating...</span>
-                                        ) : location ? (
-                                            <>
-                                                <MapPin className="h-5 w-5" />
-                                                Location Captured
-                                            </>
-                                        ) : (
-                                            <>
-                                                <Navigation className="h-5 w-5" />
-                                                Detect My Location
-                                            </>
-                                        )}
-                                    </button>
+                                Takeaway
+                            </button>
+                            <button
+                                onClick={() => setOrderType('delivery')}
+                                className={cn(
+                                    "flex-1 rounded-2xl py-3 text-sm font-bold transition-all duration-300",
+                                    orderType === 'delivery'
+                                        ? "bg-background text-foreground shadow-sm ring-1 ring-border"
+                                        : "text-muted-foreground hover:bg-background/50"
+                                )}
+                            >
+                                Delivery
+                            </button>
+                        </div>
 
-                                    <div className="relative group">
-                                        <textarea
-                                            value={address}
-                                            onChange={(e) => setAddress(e.target.value)}
-                                            placeholder=" "
-                                            className="peer w-full min-h-[100px] resize-none rounded-2xl border-none bg-secondary px-5 py-4 text-base font-medium placeholder-transparent focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all"
-                                        />
-                                        <label className="absolute left-5 top-4 text-muted-foreground text-sm transition-all peer-placeholder-shown:translate-y-0 peer-placeholder-shown:text-base peer-focus:-translate-y-3 peer-focus:text-xs peer-focus:text-primary peer-[:not(:placeholder-shown)]:-translate-y-3 peer-[:not(:placeholder-shown)]:text-xs">
-                                            Address / Landmark
-                                        </label>
-                                    </div>
+                        {/* Details Form */}
+                        <div className="space-y-4 w-full max-w-md mx-auto lg:max-w-none">
+                            <h3 className="text-lg font-bold px-1">Order Details</h3>
+
+                            <div className="grid gap-4">
+                                <div className="relative group">
+                                    <input
+                                        type="text"
+                                        value={name}
+                                        onChange={(e) => setName(e.target.value)}
+                                        placeholder=" "
+                                        className="peer w-full rounded-2xl border-none bg-secondary px-5 py-4 text-base font-medium placeholder-transparent focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all"
+                                    />
+                                    <label className="absolute left-5 top-4 text-muted-foreground text-sm transition-all peer-placeholder-shown:translate-y-0 peer-placeholder-shown:text-base peer-focus:-translate-y-3 peer-focus:text-xs peer-focus:text-primary peer-[:not(:placeholder-shown)]:-translate-y-3 peer-[:not(:placeholder-shown)]:text-xs">
+                                        Your Name
+                                    </label>
                                 </div>
-                            </motion.div>
-                        )}
-                    </AnimatePresence>
+
+                                <div className="relative group">
+                                    <input
+                                        type="tel"
+                                        value={phone}
+                                        onChange={(e) => setPhone(e.target.value)}
+                                        placeholder=" "
+                                        className="peer w-full rounded-2xl border-none bg-secondary px-5 py-4 text-base font-medium placeholder-transparent focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all"
+                                    />
+                                    <label className="absolute left-5 top-4 text-muted-foreground text-sm transition-all peer-placeholder-shown:translate-y-0 peer-placeholder-shown:text-base peer-focus:-translate-y-3 peer-focus:text-xs peer-focus:text-primary peer-[:not(:placeholder-shown)]:-translate-y-3 peer-[:not(:placeholder-shown)]:text-xs">
+                                        Phone Number
+                                    </label>
+                                </div>
+                            </div>
+
+                            <AnimatePresence>
+                                {orderType === 'delivery' && (
+                                    <motion.div
+                                        initial={{ height: 0, opacity: 0 }}
+                                        animate={{ height: 'auto', opacity: 1 }}
+                                        exit={{ height: 0, opacity: 0 }}
+                                        className="overflow-hidden space-y-4 pt-2"
+                                    >
+                                        <div className="flex flex-col gap-3">
+                                            <button
+                                                onClick={handleGetLocation}
+                                                disabled={isLoadingLocation}
+                                                className={cn(
+                                                    "flex items-center justify-center gap-2 w-full rounded-2xl py-4 font-bold transition-all active:scale-[0.98]",
+                                                    location
+                                                        ? "bg-green-600 text-white shadow-md shadow-green-600/20"
+                                                        : "bg-primary/10 text-primary hover:bg-primary/20"
+                                                )}
+                                            >
+                                                {isLoadingLocation ? (
+                                                    <span className="animate-pulse">Locating...</span>
+                                                ) : location ? (
+                                                    <>
+                                                        <MapPin className="h-5 w-5" />
+                                                        Location Captured
+                                                    </>
+                                                ) : (
+                                                    <>
+                                                        <Navigation className="h-5 w-5" />
+                                                        Detect My Location
+                                                    </>
+                                                )}
+                                            </button>
+
+                                            <div className="relative group">
+                                                <textarea
+                                                    value={address}
+                                                    onChange={(e) => setAddress(e.target.value)}
+                                                    placeholder=" "
+                                                    className="peer w-full min-h-[100px] resize-none rounded-2xl border-none bg-secondary px-5 py-4 text-base font-medium placeholder-transparent focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all"
+                                                />
+                                                <label className="absolute left-5 top-4 text-muted-foreground text-sm transition-all peer-placeholder-shown:translate-y-0 peer-placeholder-shown:text-base peer-focus:-translate-y-3 peer-focus:text-xs peer-focus:text-primary peer-[:not(:placeholder-shown)]:-translate-y-3 peer-[:not(:placeholder-shown)]:text-xs">
+                                                    Address / Landmark
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </motion.div>
+                                )}
+                            </AnimatePresence>
+                        </div>
+
+                        {/* Desktop Checkout Summary */}
+                        <div className="hidden lg:block space-y-4 pt-6 border-t border-border/50">
+                            <div className="flex items-center justify-between px-2">
+                                <span className="text-muted-foreground font-medium">Total Amount</span>
+                                <span className="text-3xl font-bold text-foreground">₹{cartTotal}</span>
+                            </div>
+                            <button
+                                onClick={handleCheckout}
+                                className="w-full rounded-2xl bg-primary py-4 text-center text-lg font-bold text-primary-foreground shadow-lg shadow-primary/25 active:scale-[0.98] transition-all hover:brightness-110"
+                            >
+                                Place Order via WhatsApp
+                            </button>
+                        </div>
+
+                    </div>
                 </div>
             </div>
 
-            {/* Footer */}
-            <div className="fixed bottom-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-xl border-t border-border/50 p-4 pb-8 safe-area-bottom">
-                <div className="mx-auto max-w-md space-y-4">
-                    <div className="flex items-center justify-between px-2">
+            {/* Footer - Mobile Only */}
+            <div className="lg:hidden fixed bottom-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-xl border-t border-border/50 p-4 pb-8 safe-area-bottom">
+                <div className="w-full space-y-4">
+                    <div className="flex items-center justify-between px-2 max-w-md mx-auto w-full">
                         <span className="text-muted-foreground font-medium">Total Amount</span>
                         <span className="text-2xl font-bold text-foreground">₹{cartTotal}</span>
                     </div>
                     <button
                         onClick={handleCheckout}
-                        className="w-full rounded-2xl bg-primary py-4 text-center text-lg font-bold text-primary-foreground shadow-lg shadow-primary/25 active:scale-[0.98] transition-all hover:brightness-110"
+                        className="w-full max-w-md mx-auto block rounded-2xl bg-primary py-4 text-center text-lg font-bold text-primary-foreground shadow-lg shadow-primary/25 active:scale-[0.98] transition-all hover:brightness-110"
                     >
                         Place Order via WhatsApp
                     </button>
