@@ -17,7 +17,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://veshro-cafe.vercel.app'), // Placeholder production URL
+  metadataBase: new URL('https://veshro-cafe-demo.vercel.app'), // Placeholder production URL
   title: {
     default: "Veshro Cafe",
     template: "%s | Veshro Cafe"
@@ -28,7 +28,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Veshro Cafe",
     description: "Experience the best food in town. Order now via WhatsApp.",
-    url: 'https://veshro-cafe.vercel.app',
+    url: 'https://veshro-cafe-demo.vercel.app/',
     siteName: 'Veshro Cafe',
     images: [
       {
